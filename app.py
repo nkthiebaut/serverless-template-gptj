@@ -32,6 +32,8 @@ def inference(model_inputs:dict) -> dict:
     prompt = model_inputs.pop('prompt', None)
     if prompt == None:
         return {'message': "No prompt provided"}
+    print(f"Prompt: {prompt}")
+    print(f"Model inputs: {model_inputs} (type: {type(model_inputs)}")
     
     # Tokenize inputs
     input_tokens = tokenizer.encode(prompt, return_tensors="pt").to(device)
