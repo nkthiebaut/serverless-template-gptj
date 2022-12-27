@@ -29,16 +29,15 @@ def inference(model_inputs:dict) -> dict:
     global tokenizer
 
     # Parse out your arguments
-    prompt = model_inputs.get('prompt', None)
+    prompt = model_inputs.pop('prompt', None)
     if prompt == None:
         return {'message': "No prompt provided"}
-    kwargs = model_inputs.pop("prompt")
     
     # Tokenize inputs
     input_tokens = tokenizer.encode(prompt, return_tensors="pt").to(device)
 
     # Run the model
-    output = model.generate(input_tokens, **kwargs)
+    output = model.generate(input_tokens, **model_inputs)
 
     # Decode output tokens
     output_text = tokenizer.batch_decode(output, skip_special_tokens = True)[0]
